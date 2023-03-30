@@ -1,2 +1,6 @@
-Django==2.1.*
-pysqlite3-binary
+asgiref
+Django==4.1.3
+python-dateutil
+six
+sqlparse
+tzdata
