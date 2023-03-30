@@ -1,0 +1,14 @@
+{
+    "builds":[
+        {
+            "src":"Mooring/wsgi.py",
+            "use":"@vercel/python"
+        }
+    ],
+    "routes":[
+        {
+            "src":"/(.*)",
+            "dest": "Mooring/wsgi.py"
+        }
+    ]
+}
