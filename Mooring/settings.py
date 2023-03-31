@@ -32,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_URL = os.path.join(BASE_DIR, 'static')
 
 
 # Application definition
