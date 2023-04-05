@@ -6,4 +6,4 @@ sqlparse
 tzdata
 psycopg2-binary
 python-dotenv
-pil
+pillow
