@@ -11,7 +11,6 @@ class Boats(models.Model):
     depth = models.IntegerField()
     # customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     last_check = models.DateField()
-    image = models.ImageField(upload_to='images', null=True)
-
+    image = models.ImageField(upload_to='images/', null=True)
 # class Customer(models.Model):
 #     boat = models.ForeignKey(Boats)

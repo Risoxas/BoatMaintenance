@@ -1,9 +1,0 @@
-asgiref
-Django==4.1.3
-python-dateutil
-six
-sqlparse
-tzdata
-psycopg2-binary
-python-dotenv
-pillow

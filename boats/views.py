@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic import DetailView
+from models import Boats
 # Create your views here.
 
 
-def index(request):
-    return HttpResponse('Welcome to boats app')
+class index(DetailView):
+    model = Boats
+    template_name = 'preview.html'
+    context_object_name = 'boat'
