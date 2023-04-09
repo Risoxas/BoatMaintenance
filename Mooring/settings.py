@@ -23,32 +23,38 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
+IS_HEROKU = 'DYBO' in os.environ
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!3uzgms)b5dx&b^u0enpcd8r*zx*x8xcljvvjbb654r@0s(v%i'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+if not IS_HEROKU:
+    DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app',
+                 'safe-chamber-41966.herokuapp.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'boats.apps.BoatsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'boats.apps.BoatsConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,9 +133,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
 
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR/'media'

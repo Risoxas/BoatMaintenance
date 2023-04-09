@@ -7,3 +7,5 @@ tzdata
 psycopg2-binary
 python-dotenv
 pillow
+gunicorn
+whitenoise
