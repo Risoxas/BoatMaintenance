@@ -1,9 +1,12 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
 
 from .models import Boats
 
 # Register your models here.
 
-admin.site.register(Boats)
+
+class BoatAdmin(admin.ModelAdmin):
+    readonly_fields = ['img_preview']
+
+
+admin.site.register(Boats, BoatAdmin)
