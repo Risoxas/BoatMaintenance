@@ -23,8 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
-IS_HEROKU = 'DYBO' in os.environ
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -32,12 +30,10 @@ IS_HEROKU = 'DYBO' in os.environ
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if not IS_HEROKU:
-    DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG')
 
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app',
-                 'safe-chamber-41966.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
