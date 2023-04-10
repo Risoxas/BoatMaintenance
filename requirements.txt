@@ -9,5 +9,6 @@ python-dotenv
 pillow
 gunicorn
 whitenoise
-google-cloud-secret-manager
+google-cloud-storage
 django-storages[google]
+django-environ

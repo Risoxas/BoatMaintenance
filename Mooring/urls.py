@@ -20,9 +20,7 @@ from django.conf.urls.static import static, serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', admin.site.urls)
-    re_path(r'^media/(?P<path>.*)/$', serve,
-            {'document_root': settings.MEDIA_ROOT}, name='media'),
+    path('', admin.site.urls)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

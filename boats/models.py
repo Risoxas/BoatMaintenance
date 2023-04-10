@@ -13,7 +13,7 @@ class Boats(models.Model):
     depth = models.IntegerField()
     # customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     last_check = models.DateField()
-    boat_image = models.ImageField(upload_to='images', default='',)
+    boat_image = models.ImageField(upload_to='images/', default='',)
 
     def img_preview(self):
         return mark_safe('<img src = "{url}" width="300"/>'.format(url=self.boat_image.url))

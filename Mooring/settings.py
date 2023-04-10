@@ -9,15 +9,12 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
 from dotenv import load_dotenv
 import mimetypes
 import os
-import io
-import google.auth
-from google.cloud import secretmanager
-import environ
+from google.oauth2 import service_account
+import json
 
 
 mimetypes.add_type("text/css", ".css", True)
@@ -36,34 +33,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-env = environ.Env(
-    SECRET_KEY=(str, os.getenv('SECRET_KEY')),
-    DATABASE_URL=(str, os.getenv('DATABASE_URL')),
-    GS_BUCKET_NAME=(str, os.getenv('GS_BUCKET_NAME')),
-)
-
 
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
-
-GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
-
-try:
-    _, os.environ["GOOGLE_CLOUD_PROJECT"] = google.auth.default()
-except google.auth.exceptions.DefaultCredentialsError:
-    pass
-
-if not DEBUG:
-    project_id = os.getenv("GOOGLE_CLOUD_PROJECT")
-
-    client = secretmanager.SecretManagerServiceClient()
-    settings_name = os.getenv("SETTINGS_NAME", "mooring_app_settings")
-    name = f'projects/{project_id}/secrets/{settings_name}/versions/latest'
-    payload = client.access_secrets_version(
-        name=name).payload.data.decode("UTF-8")
-    env.read_env(io.StringIO(payload))
-else:
-    raise Exception('No local .env or GOOGLE project detected')
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -74,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'boats.apps.BoatsConfig',
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -158,16 +130,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-
+credentials = json.loads(os.getenv('CREDENTIALS'))
+GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+    credentials)
+DEFAULT_FILE_STORAGE = "Mooring.gcloud.GoogleCloudStorageManager"
+GS_PROJECT_ID = os.getenv("GS_PROJECT_ID")
+GS_BUCKET_NAME = os.getenv("GS_BUCKET_NAME")
+MEDIA_ROOT = 'media/images'
+MEDIA_URL = os.getenv('MEDIA_URL')
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR/'media'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_URL = '/media/static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'media', 'static'),
-STATIC_ROOT = os.path.join(BASE_DIR, 'media', 'staticfiles')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-GS_BUCKET_NAME = env("GS_BUCKET_NAME")
 GS_DEFAULT_ACL = 'publicRead'
 
 # Default primary key field type
