@@ -16,4 +16,5 @@ class Boats(models.Model):
     boat_image = models.ImageField(upload_to='images/', default='',)
 
     def img_preview(self):
+        print(self.boat_image.url)
         return mark_safe('<img src = "{url}" width="300"/>'.format(url=self.boat_image.url))
