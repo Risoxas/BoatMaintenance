@@ -8,7 +8,37 @@
     <title>Image</title>
 </head>
 <body>
-    <!-- <img src="{{boat.image}}" alt=""> -->
-    <h1>Vista de imagen</h1>
+    <tr>
+        <td colspan=2>
+        <Component
+          v-if="props.data?.type == 'name'"
+          :selected="props.data.tag || []"
+          @variable="variableUpdate"
+        ></Component>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="button-row">
+            <Button
+              :loading="props.isSaving"
+              @click="() => emit('save', {
+                ...props.projectData,
+                imgSrc: imgSrcInput,
+                title: titleInput
+              })"
+            >
+              {{ props.l10n('save') }}
+            </Button>
+            <Button
+              theme="text-destructive"
+              @click="emit('cancel')"
+            >
+              {{ props.l10n('cancel') }}
+            </Button>
+          </div>
+        </td>
+      </tr>
+
 </body>
 </html>
