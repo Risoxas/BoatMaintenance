@@ -15,18 +15,8 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ('img_preview', 'mooring_no',)
     fields = ('customer', 'employee', 'order_date', 'boat_info', 'mooring_no', 'service_date', 'notes',
               'previous_image1', 'previous_image2', 'previous_image3', 'after_image1', 'after_image2', 'after_image3', 'img_preview')
-    def get_media(self, request):
-        media = super().get_media(request)
-        media.add_js([reverse('admin:order_js')])
-        return media
-    class Media:
-        js = ('admin/order.js')
 
 
 admin.site.register(Boat, BoatAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register([Customer, Employee, Product, Order_Detail])
-
-(function($){
-          $(doc)
-})
