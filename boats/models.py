@@ -12,8 +12,8 @@ postal_validator = RegexValidator(
 
 number_validator = RegexValidator(regex=r'^[0-9]+$')
 
-titles = [('Ms', 'Miss'), ('Mrs', 'Missus'), ('Mr', 'Mister'), ('Master', 'Master'),
-          ('Dr', 'Doctor'), ('Fr', 'Father'), ('Rev', 'Reverend'),
+titles = [('Ms', 'Ms'), ('Mrs', 'Mrs'), ('Mr', 'Mr'), ('Master', 'Master'),
+          ('Dr', 'Dr'), ('Fr', 'Father'), ('Rev', 'Reverend'),
           ('Atty', 'Attorney'), ('Hon', 'Honorable'), ('Prof', 'Professor'),
           ('Pres', 'President'), ('Vp', 'Vice President'), ('Gov', 'Governor'),
           ('Ofc', 'Office'), ('other', 'other')]
